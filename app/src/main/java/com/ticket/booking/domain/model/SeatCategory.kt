@@ -4,7 +4,8 @@ enum class SeatCategory {
     VIP,
     COMFORT,
     STANDARD,
-    UNKNOWN;
+    SELECTED,
+    BOOKED;
 
     companion object {
         fun fromString(type: String?): SeatCategory =
@@ -12,7 +13,7 @@ enum class SeatCategory {
                 "VIP" -> VIP
                 "COMFORT" -> COMFORT
                 "STANDARD" -> STANDARD
-                else -> UNKNOWN
+                else -> BOOKED
             }
     }
 }

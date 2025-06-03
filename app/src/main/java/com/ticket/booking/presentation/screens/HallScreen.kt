@@ -16,9 +16,8 @@ fun HallScreen(
     ) {
         HallHeader()
 
-        HallMap(
-            modifier = Modifier.weight(1f)
-        )
+        HallMap()
+
         HallFooter()
     }
 }

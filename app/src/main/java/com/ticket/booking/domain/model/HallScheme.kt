@@ -6,7 +6,10 @@ data class HallScheme(
     val mapWidth: Int,
     val mapHeight: Int,
     val hallName: String,
+    val merchantId: Int,
+    val hasOrzu: Boolean,
     val hasStarted: Boolean,
+    val hasStartedText: String,
     val seats: List<Seat>,
-    val seatsType: List<SeatType>
+    val seatsType: List<SeatsType>
 )

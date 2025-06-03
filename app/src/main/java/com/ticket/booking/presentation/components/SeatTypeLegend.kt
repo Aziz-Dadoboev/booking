@@ -1,21 +1,19 @@
 package com.ticket.booking.presentation.components
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.ticket.booking.R
 
 @Composable
 fun SeatTypeLegend() {
@@ -25,36 +23,31 @@ fun SeatTypeLegend() {
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
-        SeatTypeItem("VIP", Color.Yellow, "8000")
-        SeatTypeItem("Комфорт", Color.Green, "5500")
-        SeatTypeItem("Стандарт", Color.Blue, "6000")
+        SeatTypeItem(R.drawable.seat_1, "70")
+        SeatTypeItem(R.drawable.seat_2, "50")
+        SeatTypeItem(R.drawable.seat_3, "45")
     }
 }
 
 @Composable
 private fun SeatTypeItem(
-    type: String,
-    color: Color,
+    icon: Int,
     price: String
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
-        Box(
+        Image(
+            painter = painterResource(icon),
             modifier = Modifier
-                .size(16.dp)
-                .background(color, shape = RoundedCornerShape(2.dp))
+                .size(16.dp),
+            contentDescription = null
         )
-        Column {
-            Text(
-                text = type,
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = price,
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
+
+        Text(
+            text = price,
+            style = MaterialTheme.typography.titleMedium
+        )
     }
 }

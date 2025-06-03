@@ -6,11 +6,13 @@ data class Seat(
     val row: String,
     val place: String,
     val coordinates: Coordinates,
-    val isBooked: Boolean,
+    val bookedSeats: Int,
     val seatView: String,
+    val placeName: String?,
     val seatType: String?,
     val objectType: String,
-    val description: String
+    val objectDescription: String?,
+    val objectTitle: String
 )
 
 data class Coordinates(
