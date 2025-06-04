@@ -10,18 +10,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun HallHeader() {
+fun HallHeader(
+    modifier: Modifier = Modifier,
+    hallName: String = "Зал 3",
+    sessionDateTime: String = "16:30, 5 марта 2025"
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
         Text(
-            text = "Зал 3",
+            text = hallName,
             style = MaterialTheme.typography.headlineMedium
         )
         Text(
-            text = "16:30, 5 марта 2025",
+            text = sessionDateTime,
             style = MaterialTheme.typography.bodyMedium
         )
         SeatTypeLegend()

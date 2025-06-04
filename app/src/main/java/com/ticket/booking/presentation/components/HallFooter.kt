@@ -5,8 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -16,31 +18,42 @@ import androidx.compose.ui.unit.dp
 import com.ticket.booking.R
 
 @Composable
-fun HallFooter() {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+fun HallFooter(
+    modifier: Modifier = Modifier,
+    selectedSeatsCount: Int = 0,
+    totalAmount: Int = 0,
+    onPayClick: () -> Unit = {}
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shadowElevation = 8.dp,
+        shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+        color = MaterialTheme.colorScheme.surface
     ) {
-        Column {
-            Text(
-                text = "Выбрано мест: 0",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Text(
-                text = "Сумма: 0 ₽",
-                style = MaterialTheme.typography.headlineMedium
-            )
-        }
-
-        Button(
-            onClick = { // TODO: На экран оплаты
-            },
-            enabled = false
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(stringResource(R.string.pay))
+            Column {
+                Text(
+                    text = "Выбрано мест: $selectedSeatsCount",
+                    style = MaterialTheme.typography.bodyMedium
+                )
+                Text(
+                    text = "Сумма: $totalAmount ₽",
+                    style = MaterialTheme.typography.headlineMedium
+                )
+            }
+
+            Button(
+                onClick = onPayClick,
+                enabled = selectedSeatsCount > 0
+            ) {
+                Text(stringResource(R.string.pay))
+            }
         }
     }
 }

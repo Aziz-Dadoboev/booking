@@ -1,9 +1,7 @@
 package com.ticket.booking.presentation.components
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,8 +9,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import com.ticket.booking.R
-import com.ticket.booking.domain.model.Seat
-import com.ticket.booking.domain.model.SeatCategory
+import com.ticket.booking.data.model.Seat
 import kotlin.math.abs
 
 @Composable
@@ -21,23 +18,13 @@ fun SeatItem(
     seat: Seat,
     onSeatClick: () -> Unit
 ) {
-    val seatCategory = SeatCategory.fromString(seat.seatType)
+    val seatCategory = seat.seat_type
 
     val seatIcon = when (seatCategory) {
-        SeatCategory.VIP -> R.drawable.seat_1
-        SeatCategory.COMFORT -> R.drawable.seat_2
-        SeatCategory.STANDARD -> R.drawable.seat_3
-        SeatCategory.SELECTED -> R.drawable.seat_selected
+        "VIP" -> R.drawable.seat_1
+        "COMFORT" -> R.drawable.seat_2
+        "STANDARD" -> R.drawable.seat_3
         else -> R.drawable.seat_booked
-    }
-
-    Log.d("SEAT_DEBUG", "Seat type: ${seat.seatType}")
-    Log.d("SEAT_DEBUG", "Seat icon: $seatIcon")
-
-    val seatNumber = when (seat.seatType) {
-        null -> "X"
-        SeatCategory.SELECTED.toString() -> seat.bookedSeats.toString()
-        else -> ""
     }
 
     Box(
@@ -61,7 +48,7 @@ fun SeatItem(
                                 val endPosition = event.changes.first().position
                                 val distance = abs(endPosition.x - startPosition.x) + 
                                              abs(endPosition.y - startPosition.y)
-                                if (distance < 10f && seat.seatType != null) {
+                                if (distance < 10f) {
                                     onSeatClick()
                                 }
                             }
@@ -75,9 +62,8 @@ fun SeatItem(
     ) {
         Image(
             painter = painterResource(seatIcon),
-            contentDescription = "Seat ${seat.objectDescription}"
+            contentDescription = "Seat ${seat.object_description}"
         )
-
-        Text(text = seatNumber)
+//        Text(text = seatNumber)
     }
 }
