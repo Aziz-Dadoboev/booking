@@ -3,54 +3,97 @@ package com.ticket.booking.presentation.components
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.ticket.booking.R
 import com.ticket.booking.data.model.HallSchemeModel
 import com.ticket.booking.data.model.Seat
 import com.ticket.booking.data.model.SeatsType
-import com.ticket.booking.presentation.screens.hall.HallViewModel
 
 @Composable
 fun HallScreenContent(
     modifier: Modifier = Modifier,
     hallSchemeModel: HallSchemeModel,
-    viewModel: HallViewModel
+    minPrice: Int,
+    selectedSeats: List<Seat>,
+    onSeatClick: (Seat) -> Unit,
+    onPayClick: () -> Unit = {}
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        Column {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+        ) {
             HallHeader(
-                hallName = hallSchemeModel.hall_name,
-                sessionDateTime = "${hallSchemeModel.session_time}, ${hallSchemeModel.session_time}"
+                sessionDateTime = hallSchemeModel.session_time
             )
+            Text(
+                text = stringResource(R.string.min_price, minPrice),
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
 
+        Column (
+            modifier = Modifier
+                .background(colorResource(R.color.hall_bg))
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            val cinema = stringResource(R.string.hardcoded_cinema_name)
+            Text(
+                text = stringResource(R.string.cinema_name, cinema),
+                style = MaterialTheme.typography.headlineSmall,
+            )
+            Text(
+                text = hallSchemeModel.hall_name,
+                style = MaterialTheme.typography.bodyLarge
+            )
+            SeatTypeLegend(seatsType = hallSchemeModel.seats_type)
             HallMap(
                 modifier = Modifier.weight(1f),
                 seats = hallSchemeModel.seats,
                 mapWidth = hallSchemeModel.map_width,
-                mapHeight = hallSchemeModel.map_height
+                mapHeight = hallSchemeModel.map_height,
+                selectedSeats = selectedSeats,
+                onSeatClick = onSeatClick
             )
-        }
-
-        AnimatedVisibility(
-            visible = false,
-            modifier = Modifier.align(Alignment.BottomCenter),
-            enter = slideInVertically(initialOffsetY = { it }),
-            exit = slideOutVertically(targetOffsetY = { it })
-        ) {
-            HallFooter(
-                selectedSeatsCount = 0,
-                totalAmount = calculateTotalAmount(emptyList(), hallSchemeModel.seats_type),
-                onPayClick = viewModel::onPayClick
-            )
+            AnimatedVisibility(
+                visible = selectedSeats.isNotEmpty(),
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                HallFooter(
+                    selectedSeatsCount = selectedSeats.size,
+                    totalAmount = calculateTotalAmount(
+                        seats = selectedSeats,
+                        seatsType = hallSchemeModel.seats_type
+                    ),
+                    onPayClick = onPayClick
+                )
+            }
         }
     }
 }
 
-private fun calculateTotalAmount(seats: List<Seat>, seatsType: List<SeatsType>): Int {
+private fun calculateTotalAmount(
+    seats: List<Seat>,
+    seatsType: List<SeatsType>
+): Int {
     return seats.sumOf { seat ->
         seatsType.find { it.seat_type == seat.seat_type }?.price ?: 0
     }

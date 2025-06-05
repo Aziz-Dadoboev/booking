@@ -39,11 +39,11 @@ fun HallFooter(
         ) {
             Column {
                 Text(
-                    text = "Выбрано мест: $selectedSeatsCount",
+                    text = stringResource(R.string.selected_seats_cnt, selectedSeatsCount),
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Text(
-                    text = "Сумма: $totalAmount ₽",
+                    text = stringResource(R.string.total, totalAmount),
                     style = MaterialTheme.typography.headlineMedium
                 )
             }

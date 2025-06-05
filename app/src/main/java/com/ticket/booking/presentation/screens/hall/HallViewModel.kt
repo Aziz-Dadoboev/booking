@@ -1,8 +1,13 @@
 package com.ticket.booking.presentation.screens.hall
 
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ticket.booking.data.model.HallSchemeModel
+import com.ticket.booking.data.model.Seat
+import com.ticket.booking.data.model.SeatsType
 import com.ticket.booking.domain.repository.HallRepository
 import com.ticket.booking.presentation.navigation.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,6 +31,20 @@ class HallViewModel @Inject constructor(
     private val _navigation = Channel<String>()
     val navigation = _navigation.receiveAsFlow()
 
+    private val _seats = mutableStateListOf<SeatsType>()
+    val minSeatPrice by derivedStateOf {
+        _seats.minOfOrNull { it.price } ?: 0
+    }
+
+    private val _selectedSeats = mutableStateListOf<Seat>()
+    val selectedSeats: List<Seat> = _selectedSeats
+
+    private val _totalAmount = MutableStateFlow(0)
+    val totalAmount: StateFlow<Int> = _totalAmount.asStateFlow()
+
+    private val _commissionPercent = MutableStateFlow(0)
+    val commissionPercent: StateFlow<Int> = _commissionPercent.asStateFlow()
+
     init {
         loadHallScheme()
     }
@@ -34,6 +53,10 @@ class HallViewModel @Inject constructor(
         viewModelScope.launch {
             val result = hallRepository.getHallScheme()
             if (result.isSuccess) {
+                result.getOrNull()?.let { scheme ->
+                    _seats.clear()
+                    _seats.addAll(scheme.seats_type)
+                }
                 _state.update {
                     it.copy(
                         hallScheme = result.getOrNull(),
@@ -50,8 +73,20 @@ class HallViewModel @Inject constructor(
             }
         }
     }
+    fun onSeatClick(seat: Seat) {
+        if (_selectedSeats.contains(seat)) {
+            _selectedSeats.remove(seat)
+        } else {
+            _selectedSeats.add(seat)
+        }
+        _totalAmount.value = _selectedSeats.sumOf { seat ->
+            _seats.find { it.seat_type == seat.seat_type }?.price ?: 0
+        }
+    }
 
-    fun onPayClick() {
+
+    fun onPayment(comission: Int) {
+        _commissionPercent.value = comission
         viewModelScope.launch {
             _navigation.send(Screen.Payment.route)
         }

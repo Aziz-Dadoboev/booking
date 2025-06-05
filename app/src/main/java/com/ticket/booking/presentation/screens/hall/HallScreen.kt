@@ -31,7 +31,8 @@ fun HallScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         when {
@@ -40,8 +41,16 @@ fun HallScreen(
             }
             state.hallScheme != null -> {
                 HallScreenContent(
+                    modifier = Modifier.fillMaxSize(),
                     hallSchemeModel = state.hallScheme!!,
-                    viewModel = viewModel
+                    minPrice = viewModel.minSeatPrice,
+                    selectedSeats = viewModel.selectedSeats,
+                    onSeatClick = { viewModel.onSeatClick(it) },
+                    onPayClick = {
+                        viewModel.onPayment(
+                            comission = 10
+                        )
+                    }
                 )
             }
             state.error != null -> {

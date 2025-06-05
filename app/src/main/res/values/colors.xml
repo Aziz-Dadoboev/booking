@@ -13,4 +13,5 @@
     <color name="comfort_seat">#09118E</color>
     <color name="vip_seat">#B6119B</color>
     <color name="standard_seat">#FF9800</color>
+    <color name="hall_bg">#F4F4F4</color>
 </resources>

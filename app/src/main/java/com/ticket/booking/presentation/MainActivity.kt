@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ticket.booking.presentation.navigation.Screen
 import com.ticket.booking.presentation.screens.hall.HallScreen
+import com.ticket.booking.presentation.screens.payment.PaymentScreen
 import com.ticket.booking.presentation.theme.BookingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +39,9 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(Screen.Payment.route) {
-                            // TODO: PaymentScreen()
+                            PaymentScreen(
+                                navController = navController
+                            )
                         }
                     }
                 }

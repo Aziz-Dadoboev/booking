@@ -1,5 +1,6 @@
 package com.ticket.booking.presentation.components
 
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -28,7 +29,9 @@ fun HallMap(
     modifier: Modifier = Modifier,
     seats: List<Seat>,
     mapWidth: Int = 558,
-    mapHeight: Int = 346
+    mapHeight: Int = 346,
+    selectedSeats: List<Seat> = emptyList(),
+    onSeatClick: (Seat) -> Unit = {}
 ) {
     val density = LocalDensity.current
     val seatSize = 24.dp
@@ -52,50 +55,51 @@ fun HallMap(
         LaunchedEffect(Unit) {
             offset = Offset(initialOffsetX, initialOffsetY)
         }
+        val gestureModifier = Modifier
+            .pointerInput(boxWidth to boxHeight) {
+                val (width, height) = boxWidth to boxHeight
 
+                detectTransformGestures(
+                    onGesture = { centroid, pan, zoom, _ ->
+                        val newScale = (scale * zoom).coerceIn(1f, 3f)
+
+                        val contentWidth = mapWidth * density.density
+                        val contentHeight = mapHeight * density.density
+
+                        val centerOffsetX = (width - contentWidth) / 2
+                        val centerOffsetY = (height - contentHeight) / 2
+
+                        val maxX = ((contentWidth * newScale - width) / 2).coerceAtLeast(0f)
+                        val maxY = ((contentHeight * newScale - height) / 2).coerceAtLeast(0f)
+
+                        val newOffsetX = if (newScale > 1f) {
+                            (offset.x + pan.x).coerceIn(
+                                centerOffsetX - maxX,
+                                centerOffsetX + maxX
+                            )
+                        } else {
+                            centerOffsetX
+                        }
+
+                        val newOffsetY = if (newScale > 1f) {
+                            (offset.y + pan.y).coerceIn(
+                                centerOffsetY - maxY,
+                                centerOffsetY + maxY
+                            )
+                        } else {
+                            centerOffsetY
+                        }
+                        scale = (scale * zoom).coerceIn(1f, 5f)
+                        offset = Offset(newOffsetX, newOffsetY)
+                        zoomCenter = centroid
+                    }
+                )
+            }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .clipToBounds()
-                .pointerInput(boxWidth to boxHeight) {
-                    val (width, height) = boxWidth to boxHeight
-
-                    detectTransformGestures(
-                        onGesture = { centroid, pan, zoom, _ ->
-                            val newScale = (scale * zoom).coerceIn(1f, 3f)
-
-                            val contentWidth = mapWidth * density.density
-                            val contentHeight = mapHeight * density.density
-
-                            val centerOffsetX = (width - contentWidth) / 2
-                            val centerOffsetY = (height - contentHeight) / 2
-
-                            val maxX = ((contentWidth * newScale - width) / 2).coerceAtLeast(0f)
-                            val maxY = ((contentHeight * newScale - height) / 2).coerceAtLeast(0f)
-
-                            val newOffsetX = if (newScale > 1f) {
-                                (offset.x + pan.x).coerceIn(
-                                    centerOffsetX - maxX,
-                                    centerOffsetX + maxX
-                                )
-                            } else {
-                                centerOffsetX
-                            }
-
-                            val newOffsetY = if (newScale > 1f) {
-                                (offset.y + pan.y).coerceIn(
-                                    centerOffsetY - maxY,
-                                    centerOffsetY + maxY
-                                )
-                            } else {
-                                centerOffsetY
-                            }
-                            scale = (scale * zoom).coerceIn(1f, 5f)
-                            offset = Offset(newOffsetX, newOffsetY)
-                            zoomCenter = centroid
-                        }
-                    )
-                }
+                .then(gestureModifier)
                 .graphicsLayer {
                     scaleX = scale
                     scaleY = scale
@@ -114,13 +118,25 @@ fun HallMap(
                         y = seat.top.dp
                     )
                     .size(seatSize)
+                    .pointerInput(seat) {
+                        detectTapGestures {
+                            onSeatClick(seat)
+                        }
+                    }
 
                 when (seat.object_type) {
                     "seat" -> {
+                        val isSelected = selectedSeats.contains(seat)
+                        val selectedNum = if (isSelected) {
+                            selectedSeats.indexOf(seat) + 1
+                        } else {
+                            0
+                        }
                         SeatItem(
                             modifier = seatModifier,
                             seat = seat,
-                            onSeatClick = {}
+                            isSelected = isSelected,
+                            selectedNum = selectedNum
                         )
                     }
                     "label" -> Text(seat.object_title, seatModifier)
