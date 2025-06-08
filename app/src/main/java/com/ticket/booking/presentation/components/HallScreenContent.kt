@@ -19,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import com.ticket.booking.R
 import com.ticket.booking.data.model.HallSchemeModel
 import com.ticket.booking.data.model.Seat
-import com.ticket.booking.data.model.SeatsType
 
 @Composable
 fun HallScreenContent(
@@ -27,6 +26,7 @@ fun HallScreenContent(
     hallSchemeModel: HallSchemeModel,
     minPrice: Int,
     selectedSeats: List<Seat>,
+    totalAmount: Int,
     onSeatClick: (Seat) -> Unit,
     onPayClick: () -> Unit = {}
 ) {
@@ -49,8 +49,7 @@ fun HallScreenContent(
         Column (
             modifier = Modifier
                 .background(colorResource(R.color.hall_bg))
-                .fillMaxWidth()
-                .padding(16.dp),
+                .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val cinema = stringResource(R.string.hardcoded_cinema_name)
@@ -64,7 +63,6 @@ fun HallScreenContent(
             )
             SeatTypeLegend(seatsType = hallSchemeModel.seats_type)
             HallMap(
-                modifier = Modifier.weight(1f),
                 seats = hallSchemeModel.seats,
                 mapWidth = hallSchemeModel.map_width,
                 mapHeight = hallSchemeModel.map_height,
@@ -79,22 +77,10 @@ fun HallScreenContent(
             ) {
                 HallFooter(
                     selectedSeatsCount = selectedSeats.size,
-                    totalAmount = calculateTotalAmount(
-                        seats = selectedSeats,
-                        seatsType = hallSchemeModel.seats_type
-                    ),
+                    totalAmount = totalAmount,
                     onPayClick = onPayClick
                 )
             }
         }
-    }
-}
-
-private fun calculateTotalAmount(
-    seats: List<Seat>,
-    seatsType: List<SeatsType>
-): Int {
-    return seats.sumOf { seat ->
-        seatsType.find { it.seat_type == seat.seat_type }?.price ?: 0
     }
 }

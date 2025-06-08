@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">booking</string>
     <string name="pay">Оплатить</string>
+    <string name="screen">Экран</string>
     <string name="sum_to_pay">Сумма к оплате</string>
     <string name="error">Error</string>
     <string name="selected_seats_cnt">Выбрано мест: %1$s</string>

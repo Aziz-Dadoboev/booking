@@ -38,7 +38,9 @@ fun SeatItem(
             contentDescription = "Seat ${seat.object_description}"
         )
         if (isSelected && selectedNum > 0) {
-            Text(text = "$selectedNum")
+            Text(
+                text = "$selectedNum",
+            )
         }
     }
 }
