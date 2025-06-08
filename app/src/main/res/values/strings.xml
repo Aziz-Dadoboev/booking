@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">booking</string>
+    <string name="pay">Оплатить</string>
+    <string name="screen">Экран</string>
+    <string name="sum_to_pay">Сумма к оплате</string>
+    <string name="error">Error</string>
+    <string name="selected_seats_cnt">Выбрано мест: %1$s</string>
+    <string name="total">Сумма: %1$s</string>
+    <string name="total_payment">Сумма:</string>
+    <string name="hardcoded_2d">2D</string>
+    <string name="vip">VIP</string>
+    <string name="comfort">COMFORT</string>
+    <string name="standard">STANDARD</string>
+    <string name="cinema_name">Кинотеатр \"%1$s\"</string>
+    <string name="hardcoded_cinema_name">Навруз</string>
+    <string name="min_price">От %1$s</string>
+    <string name="comission">Комиссия (%1$s):</string>
+    <string name="buy">Купить</string>
+    <string name="oferta">"Нажимая \"Купить\", вы соглашаетесь с условиями "</string>
+    <string name="offerta_end">оферты</string>
 </resources>

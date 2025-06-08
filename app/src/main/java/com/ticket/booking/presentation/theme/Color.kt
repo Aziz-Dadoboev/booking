@@ -1,4 +1,4 @@
-package com.ticket.booking.ui.theme
+package com.ticket.booking.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

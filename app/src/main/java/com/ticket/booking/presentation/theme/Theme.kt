@@ -1,4 +1,4 @@
-package com.ticket.booking.ui.theme
+package com.ticket.booking.presentation.theme
 
 import android.app.Activity
 import android.os.Build
