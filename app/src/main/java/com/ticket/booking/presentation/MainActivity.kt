@@ -52,7 +52,6 @@ class MainActivity : FragmentActivity() {
                         is HallUiState.Loading -> showLoading(true)
                         is HallUiState.Success -> {
                             showLoading(false)
-                            // передать данные во фрагмент
                         }
                         is HallUiState.Error -> {
                             showLoading(false)
@@ -67,6 +66,8 @@ class MainActivity : FragmentActivity() {
     private fun showLoading(show: Boolean) {
         findViewById<ProgressBar>(R.id.progressBar).visibility =
             if (show) View.VISIBLE else View.GONE
+        findViewById<View>(R.id.nav_host_fragment).visibility =
+            if (show) View.GONE else View.VISIBLE
     }
 
     private fun showError(message: String) {

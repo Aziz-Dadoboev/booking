@@ -1,7 +1,6 @@
 package com.ticket.booking.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +10,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.ticket.booking.data.remote.HallResponse
-import com.ticket.booking.data.remote.SeatsType
-import com.ticket.booking.data.toUiSeat
+import androidx.navigation.fragment.findNavController
+import com.ticket.booking.R
 import com.ticket.booking.databinding.FragmentHallBinding
 import kotlinx.coroutines.launch
 
@@ -33,30 +31,21 @@ class HallFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        Log.d("HallFragment", "View Created. Setting up observers...")
         setupObservers()
-        Log.d("HallFragment", "observers set.")
-        setupClickListeners()
+        setupInteractions()
     }
 
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                Log.d("HallFragment", "Lifecycle started")
                 viewModel.uiState.collect { state ->
                     when (state) {
                         is HallUiState.Success -> {
-                            Log.d("HallFragment", "uiState success")
-                            displayHallData(state.data)
+                            val prepared = viewModel.prepareUi(state.data)
+                            displayPreparedData(prepared)
                         }
-                        is HallUiState.Error -> {
-                            Log.d("HallFragment", "uiState error ${state.message}")
-                            showError(state.message)
-                        }
-                        else -> {
-                            Log.d("HallFragment", "uiState unknown")
-                            showError("Error")
+                        is HallUiState.Error -> showError(state.message)
+                        is HallUiState.Loading -> {
                         }
                     }
                 }
@@ -64,34 +53,42 @@ class HallFragment : Fragment() {
         }
     }
 
-    private fun displayHallData(data: HallResponse) {
-        binding.hallName.text = data.hall_name
-        binding.sessionDateTime.text = data.session_time
-        val seatsTypeList = data.seats_type.plus(
-            SeatsType(
-                name = "Занято",
-                price = 0,
-                seat_type = "",
-                ticket_id = 0,
-                ticket_type = ""
-            )
-        )
-        val adapter = SeatTypeAdapter(seatsTypeList)
-        binding.seatsTypeList.adapter = adapter
+    private fun displayPreparedData(data: PreparedHallUi) {
+        binding.hallName.text = data.hallName
+        binding.sessionDateTime.text = data.sessionTime
+        binding.seatsCnt.text = getString(R.string.booked_seats, data.bookedSeats.toString())
 
-        val uiSeats = data.seats.map { it.toUiSeat() }
+        if (data.hasStarted) binding.sessionStarted.text = data.hasStartedText
+        else binding.sessionStarted.visibility = View.INVISIBLE
+
+        binding.seatsTypeList.adapter = SeatTypeAdapter(data.seatTypes)
+
         binding.hallMapView.setMapData(
-            seats = uiSeats,
-            mapWidth = data.map_width,
-            mapHeight = data.map_height
+            seats = data.uiSeats,
+            mapWidth = data.mapWidth,
+            mapHeight = data.mapHeight
         )
-
     }
 
-    private fun setupClickListeners() {
-//        binding.btnProceedToPayment.setOnClickListener {
-//            findNavController().navigate(R.id.action_hall_to_payment)
-//        }
+    private fun setupInteractions() {
+        val hallMapView = binding.hallMapView
+        val footerLayout = binding.footerLayout
+        val selectedSeatsCountText = binding.selectedSeatsCount
+        val totalAmountText = binding.totalAmount
+        val payButton = binding.payButton
+
+        hallMapView.onSeatSelectionChanged = {
+            val selectedSeats = hallMapView.getSelectedSeats()
+            val footerState = viewModel.calculateFooterState(selectedSeats)
+
+            footerLayout.visibility = if (footerState.visible) View.VISIBLE else View.GONE
+            selectedSeatsCountText.text = getString(R.string.selected_seats, footerState.count.toString())
+            totalAmountText.text = getString(R.string.sum, footerState.total.toString())
+        }
+
+        payButton.setOnClickListener {
+            findNavController().navigate(R.id.action_HallFragment_to_PaymentFragment)
+        }
     }
 
     private fun showError(message: String) {

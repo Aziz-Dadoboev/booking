@@ -3,8 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/PaymentFragment"
     tools:context=".presentation.PaymentFragment">
 
+    <TextView
+        android:id="@+id/labelSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/to_pay"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/valueSum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="0"
+        android:layout_marginStart="32dp"
+        app:layout_constraintStart_toEndOf="@id/labelSum"
+        app:layout_constraintTop_toTopOf="@id/labelSum" />
+
+    <TextView
+        android:id="@+id/labelCommission"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/comission"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/valueSum" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buyButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:text="@string/pay"
+        android:layout_margin="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/valueSum"/>
+
+    <TextView
+        android:id="@+id/ofertaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/oferta"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="12sp"
+        android:autoLink="web"
+        android:gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buyButton"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -232,4 +232,9 @@ class HallMapView @JvmOverloads constructor(
         offsetX = offsetX.coerceIn(minX, 0f)
         offsetY = offsetY.coerceIn(minY, 0f)
     }
+
+    fun getSelectedSeats(): List<Seat> {
+        return seats.filter { selectedSeats.contains(it.seat_id) }
+    }
+
 }

@@ -8,6 +8,9 @@
         android:id="@+id/hallFragment"
         android:name="com.ticket.booking.presentation.HallFragment"
         android:label="Hall">
+        <action
+            android:id="@+id/action_HallFragment_to_PaymentFragment"
+            app:destination="@id/paymentFragment"/>
     </fragment>
 
     <fragment
