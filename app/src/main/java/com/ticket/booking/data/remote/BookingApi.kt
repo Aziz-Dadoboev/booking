@@ -1,4 +1,4 @@
-package com.ticket.booking.data
+package com.ticket.booking.data.remote
 
 import retrofit2.http.GET
 

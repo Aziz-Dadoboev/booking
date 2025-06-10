@@ -1,4 +1,4 @@
-package com.ticket.booking.data
+package com.ticket.booking.data.remote
 
 data class HallResponse(
     val hall_name: String,

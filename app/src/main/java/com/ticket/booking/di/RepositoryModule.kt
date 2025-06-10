@@ -1,6 +1,6 @@
 package com.ticket.booking.di
 
-import com.ticket.booking.data.BookingRepositoryImpl
+import com.ticket.booking.data.remote.BookingRepositoryImpl
 import com.ticket.booking.domain.BookingRepository
 import dagger.Binds
 import dagger.Module

@@ -1,6 +1,6 @@
 package com.ticket.booking.di
 
-import com.ticket.booking.data.BookingApi
+import com.ticket.booking.data.remote.BookingApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

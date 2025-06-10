@@ -1,4 +1,4 @@
-package com.ticket.booking.data
+package com.ticket.booking.data.remote
 
 data class Seat(
     val booked_seats: Int,
