@@ -1,11 +1,11 @@
 package com.ticket.booking.data.remote
 
-import com.ticket.booking.data.local.dao.SeatDao
-import com.ticket.booking.data.local.dao.SeatsTypeDao
-import com.ticket.booking.data.local.dao.SessionDao
-import com.ticket.booking.data.local.entity.SeatEntity
-import com.ticket.booking.data.local.entity.SeatsTypeEntity
-import com.ticket.booking.data.local.entity.SessionEntity
+import com.ticket.booking.data.db.dao.SeatDao
+import com.ticket.booking.data.db.dao.SeatsTypeDao
+import com.ticket.booking.data.db.dao.SessionDao
+import com.ticket.booking.data.db.entity.SeatEntity
+import com.ticket.booking.data.db.entity.SeatsTypeEntity
+import com.ticket.booking.data.db.entity.SessionEntity
 import com.ticket.booking.domain.BookingRepository
 import retrofit2.HttpException
 import java.io.IOException
@@ -69,7 +69,7 @@ class BookingRepositoryImpl @Inject constructor(
                 left = it.left,
                 bookedSeats = it.booked_seats,
                 seatView = it.seat_view,
-                placeName = it.place_name?.toString(),
+                placeName = it.place_name.toString(),
                 seatType = it.seat_type,
                 objectType = it.object_type,
                 objectDescription = it.object_description,

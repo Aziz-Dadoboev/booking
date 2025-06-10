@@ -2,10 +2,10 @@ package com.ticket.booking.di
 
 import android.content.Context
 import androidx.room.Room
-import com.ticket.booking.data.local.BookingDatabase
-import com.ticket.booking.data.local.dao.SeatDao
-import com.ticket.booking.data.local.dao.SeatsTypeDao
-import com.ticket.booking.data.local.dao.SessionDao
+import com.ticket.booking.data.db.BookingDatabase
+import com.ticket.booking.data.db.dao.SeatDao
+import com.ticket.booking.data.db.dao.SeatsTypeDao
+import com.ticket.booking.data.db.dao.SessionDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

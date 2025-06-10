@@ -1,11 +1,11 @@
-package com.ticket.booking.data.local.dao
+package com.ticket.booking.data.db.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ticket.booking.data.local.entity.SeatsTypeEntity
+import com.ticket.booking.data.db.entity.SeatsTypeEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

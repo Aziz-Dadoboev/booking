@@ -60,6 +60,8 @@ dependencies {
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     kapt(libs.room.compiler)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.fragment.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

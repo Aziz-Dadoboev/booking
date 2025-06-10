@@ -1,4 +1,4 @@
-package com.ticket.booking.data.local.entity
+package com.ticket.booking.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
