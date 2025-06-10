@@ -69,7 +69,7 @@ class BookingRepositoryImpl @Inject constructor(
                 left = it.left,
                 bookedSeats = it.booked_seats,
                 seatView = it.seat_view,
-                placeName = it.place_name.toString(),
+                placeName = it.place_name?.toString(),
                 seatType = it.seat_type,
                 objectType = it.object_type,
                 objectDescription = it.object_description,

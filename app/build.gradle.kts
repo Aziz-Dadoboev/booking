@@ -40,6 +40,10 @@ android {
         arguments {arg("room.schemaLocation", "$projectDir/schemas")}
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
+
 }
 
 dependencies {
@@ -62,6 +66,8 @@ dependencies {
     kapt(libs.room.compiler)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
