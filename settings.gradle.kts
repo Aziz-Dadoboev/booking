@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "booking"
 include(":app")
+include(":hallMapView")

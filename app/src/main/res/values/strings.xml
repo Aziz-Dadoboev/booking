@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">booking</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hardcoded_cinema_name">Кинотеатр Навруз</string>
+    <string name="hardcoded2d">2D</string>
+    <string name="vip">VIP</string>
+    <string name="comfort">COMFORT</string>
+    <string name="standard">STANDARD</string>
 </resources>
