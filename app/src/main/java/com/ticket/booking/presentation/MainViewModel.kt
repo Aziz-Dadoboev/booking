@@ -81,7 +81,7 @@ class MainViewModel @Inject constructor(
             mapHeight = hall.map_height,
             hasStarted = hall.has_started,
             hasStartedText = hall.has_started_text ?: "",
-            bookedSeats = 0 //
+            bookedSeats = hall.seats.size
         )
     }
 
