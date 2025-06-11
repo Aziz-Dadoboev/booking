@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">booking</string>
+    <string name="hardcoded_cinema_name">Кинотеатр Навруз</string>
+    <string name="hardcoded2d">2D</string>
+    <string name="vip">VIP</string>
+    <string name="comfort">COMFORT</string>
+    <string name="standard">STANDARD</string>
+    <string name="oferta">Нажимая “Купить”, вы соглашаетесь с условиями <u><font color='#2196F3'>оферты</font></u></string>
+    <string name="to_pay">К оплате:</string>
+    <string name="comission">Комиссия 0%</string>
+    <string name="pay">Оплатить</string>
+    <string name="selected_seats">Выбрано мест: %1$s</string>
+    <string name="booked_seats">Осталось мест: %1$s</string>
+    <string name="sum">Итого: %1$s</string>
 </resources>

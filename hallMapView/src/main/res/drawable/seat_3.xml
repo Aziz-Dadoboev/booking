@@ -1,0 +1,12 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="30dp"
+    android:height="23dp"
+    android:viewportWidth="30"
+    android:viewportHeight="23">
+  <path
+      android:pathData="M0,4.276C0,3.171 0.895,2.276 2,2.276H4C5.105,2.276 6,3.171 6,4.276V14.276C6,15.38 6.895,16.276 8,16.276H22C23.105,16.276 24,15.38 24,14.276V4.276C24,3.171 24.895,2.276 26,2.276H28C29.105,2.276 30,3.171 30,4.276V17.276C30,20.037 27.761,22.276 25,22.276H5C2.239,22.276 0,20.037 0,17.276V4.276Z"
+      android:fillColor="@color/comfort_seat"/>
+  <path
+      android:pathData="M7,3.276C7,1.619 8.343,0.276 10,0.276H20C21.657,0.276 23,1.619 23,3.276V14.276C23,14.828 22.552,15.276 22,15.276H8C7.448,15.276 7,14.828 7,14.276V3.276Z"
+      android:fillColor="@color/comfort_seat"/>
+</vector>

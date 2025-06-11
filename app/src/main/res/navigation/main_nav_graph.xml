@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/hallFragment">
+
+    <fragment
+        android:id="@+id/hallFragment"
+        android:name="com.ticket.booking.presentation.HallFragment"
+        android:label="Hall">
+        <action
+            android:id="@+id/action_HallFragment_to_PaymentFragment"
+            app:destination="@id/paymentFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.ticket.booking.presentation.PaymentFragment"
+        android:label="Payment" />
+
+</navigation>
